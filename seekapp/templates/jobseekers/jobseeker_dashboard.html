@@ -1,0 +1,144 @@
+{% extends 'slider-base.html' %}
+{% load static  %} 
+{% load bootstrap4 %}
+{% block content %}
+<section style="background-color: #F3F9FF; height: 700px;">
+{% if request.user.is_verified %}
+<div class="container-fluid pt-5">
+  <div class="row">
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="text-center">
+          {% if profile.profile_photo.url %}
+          <img class="profile_picture my-4"
+             src="{{profile.profile_photo.url}}" style="height: 10vh; width:10vh; border-radius: 50%;" alt="" >
+             {% else %}
+            <img class="profile_picture my-4"
+               src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 10vh; width:10vh;" alt="">
+               {% endif %}
+        </div>
+     
+        <h4 class="text-center text-dark mb-2">{{user.username}}</h4>
+        <div class="card-header"><a href="{%url 'upload_file'%}">Upload document</a></div>
+        <div class="card-header"><a href="{%url 'update_jobseeker_profile' %}">Update Details</a></div>
+        <div class="card-header"><a href="{%url 'add_portfolio'%}">Add portfolio</a></div>
+        <div class="card-header"><a href="{%url 'profile_jobseeker'%}">See my Profile</a></div>
+      </div>
+
+    </div>
+    
+    <div class="col-md-6">
+      {% if documents %}
+      <h4 class="text-center">Documents and Resumes</h4>
+      {% for document in documents %}
+      <div class="card p-2 mb-3">
+        <h2><i class="fas fa-file-pdf"></i> {{document.name}}</h2>
+        <a href="{{document.pdf.url}}" target="_blank" class="btn btn-outline-info doc mb-1"><i class="fas fa-eye"></i> View</a>
+        <a href="{{ document.pdf.url }}" download="" class="btn btn-outline-info doc mb-1"><i class="fa fa-download" aria-hidden="true"></i> Download</a>  
+      </div>
+      {% endfor %}
+      {%else%}
+      <div class="card">
+        <h4 class ="text-center">Start Uploading Documents and Resume</h4>
+      </div>
+      {% endif %}
+    </div>
+    <div class="col-md-3">
+      {% if portfolios %}
+      <h4 class="text-center">Portfolios</h4>
+      {% for portfolio in portfolios %}
+      <div class="card p-2 mb-2">
+        <h2><i class="fas fa-link"></i>{{portfolio.name}}</h2>
+        <a href="{{ portfolio.link }}" target="_blank" class="btn btn-outline-info doc">View</a>
+      </div>
+      {% endfor %}
+      {%else%}
+      <div class="card">
+        <h4 class="text-center">Upload Portfolio</h4>
+      </div>
+      {% endif %}
+        
+    </div>
+  </div>
+</div>
+{% else %}
+<p class="alert-warning text-center">Pending Verification !!. You will recieve an email on verification and your profile will be visible to employers once verified.</p>
+<div class="container-fluid pt-5">
+  <div class="row">
+
+    <div class="col-md-3">
+      <div class="card">
+        <div class="text-center">
+          {% if profile.profile_photo.url %}
+          <img class="profile_picture my-4"
+             src="{{profile.profile_photo.url}}" style="height: 10vh; width:10vh; border-radius: 50%;" alt="" >
+             {% else %}
+            <img class="profile_picture my-4"
+               src="https://res.cloudinary.com/dbos9xidr/image/upload/v1626854682/zvtfufhexa8lqqqgcdt3.png" style="height: 10vh; width:10vh;" alt="">
+               {% endif %}
+        </div>
+     
+        <h4 class="text-center text-dark mb-2">{{user.username}}</h4>
+        <div class="card-header"><a href="{%url 'upload_file'%}">Upload document</a></div>
+        <div class="card-header"><a href="{%url 'update_jobseeker_profile' %}">Update Details</a></div>
+        <div class="card-header"><a href="{%url 'add_portfolio'%}">Add portfolio</a></div>
+        <div class="card-header"><a href="{%url 'profile_jobseeker'%}">See my Profile</a></div>
+      </div>
+
+    </div>
+    <div class="col-md-6">
+      {% if documents %}
+      <h4 class="text-center">Documents and Resumes</h4>
+      {% for document in documents %}
+      <div class="card p-2 mb-3">
+        <h2><i class="fas fa-file-pdf"></i> {{document.name}}</h2>
+        <a href="../{{document.pdf}}" target="_blank" class="btn btn-outline-info doc mb-1"><i class="fas fa-eye"></i> View</a>
+        <a href="{{document.pdf.url}}" download="" class="btn btn-outline-info doc mb-1"><i class="fa fa-download" aria-hidden="true"></i> Download</a>  
+      </div>
+      {% endfor %}
+      {%else%}
+      <div class="card">
+        <h4 class ="text-center">Start Uploading Documents and Resume</h4>
+      </div>
+      {% endif %}
+    </div>
+    <div class="col-md-3">
+      {% if portfolios %}
+      <h4 class="text-center">Portfolios</h4>
+      {% for portfolio in portfolios %}
+      <div class="card p-2 mb-2">
+        <h2><i class="fas fa-link"></i>{{portfolio.name}}</h2>
+        <a href="{{ portfolio.link }}" target="_blank" class="btn btn-outline-info doc">View</a>
+      </div>
+      {% endfor %}
+      {%else%}
+      <div class="card">
+        <h4 class="text-center">Upload Portfolio</h4>
+      </div>
+      {% endif %}
+        
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<!-- <div class="not-verified">
+  <div class="text-center">
+    <p class="alert-warning">Pending Verification !!</p>
+    <h2 class="font-weight-bold" style="padding-top: 100px;">Your profile is not verified.</h2>
+    <h3>You will receive an email once your profile is approved.</h3>
+  </div>
+  
+</div> -->
+
+{% endif %}
+</section>
+
+{% endblock %}
+
